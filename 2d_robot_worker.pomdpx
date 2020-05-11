@@ -1,0 +1,1605 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<pomdpx version="1.0" id="2d_robot_worker" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="pomdpx.xsd">
+<Description>A sarsop solution for the pomdp inside mdp.</Description>
+<Discount>0.95</Discount>
+
+
+<Variable>
+	<StateVar vnamePrev="robot_pos_0" vnameCurr= "robot_pos_1" fullyObs="true">
+		<ValueEnum>Rpos_0_0_0 Rpos_1_1_0 Rpos_2_2_0 Rpos_3_3_0 Rpos_4_4_0 Rpos_5_0_1 Rpos_6_1_1 Rpos_7_2_1 Rpos_8_3_1 Rpos_9_4_1 Rpos_10_0_2 Rpos_11_1_2 Rpos_12_2_2 Rpos_13_3_2 Rpos_14_4_2 Rpos_15_0_3 Rpos_16_1_3 Rpos_17_2_3 Rpos_18_3_3 Rpos_19_4_3 Rpos_20_0_4 Rpos_21_1_4 Rpos_22_2_4 Rpos_23_3_4 Rpos_24_4_4 </ValueEnum>
+	</StateVar>
+	<StateVar vnamePrev="worker_pos_0" vnameCurr= "worker_pos_1" fullyObs="true">
+		<ValueEnum>Wpos_0_0_0 Wpos_1_1_0 Wpos_2_2_0 Wpos_3_3_0 Wpos_4_4_0 Wpos_5_0_1 Wpos_6_1_1 Wpos_7_2_1 Wpos_8_3_1 Wpos_9_4_1 Wpos_10_0_2 Wpos_11_1_2 Wpos_12_2_2 Wpos_13_3_2 Wpos_14_4_2 Wpos_15_0_3 Wpos_16_1_3 Wpos_17_2_3 Wpos_18_3_3 Wpos_19_4_3 Wpos_20_0_4 Wpos_21_1_4 Wpos_22_2_4 Wpos_23_3_4 Wpos_24_4_4 </ValueEnum>
+	</StateVar>
+	<StateVar vnamePrev="worker_vel_0" vnameCurr= "worker_vel_1" fullyObs="true">
+		<ValueEnum>Wvel_0 Wvel_1 Wvel_2 Wvel_3 Wvel_4 </ValueEnum>
+	</StateVar>
+	<StateVar vnamePrev="worker_goal_0" vnameCurr= "worker_goal_1" fullyObs="false">
+		<ValueEnum>Wgoal_0 Wgoal_1 </ValueEnum>
+	</StateVar>
+	<ObsVar vname="obs_sensor">
+		<ValueEnum>obs_g0 obs_g1</ValueEnum>
+	</ObsVar>
+	<ActionVar vname="action">
+		<ValueEnum>A_0 A_1 A_2 A_3 A_4 </ValueEnum>
+	</ActionVar>
+	<RewardVar vname="reward" />
+</Variable>
+
+<InitialStateBelief>
+	<CondProb>
+		<Var>robot_pos_0</Var>
+		<Parent>null</Parent>
+		<Parameter type="TBL">
+			<Entry>
+				<Instance> - </Instance>
+				<ProbTable>1.0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</ProbTable>
+			</Entry>
+		</Parameter>
+	</CondProb>
+	<CondProb>
+		<Var>worker_pos_0</Var>
+		<Parent>null</Parent>
+		<Parameter type="TBL">
+			<Entry>
+				<Instance> - </Instance>
+				<ProbTable>0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1.0 </ProbTable>
+			</Entry>
+		</Parameter>
+	</CondProb>
+	<CondProb>
+		<Var>worker_vel_0</Var>
+		<Parent>null</Parent>
+		<Parameter type="TBL">
+			<Entry>
+				<Instance> - </Instance>
+				<ProbTable>1.0 0 0 0 0</ProbTable>
+			</Entry>
+		</Parameter>
+	</CondProb>
+	<CondProb>
+		<Var>worker_goal_0</Var>
+		<Parent>null</Parent>
+		<Parameter type="TBL">
+			<Entry>
+				<Instance> - </Instance>
+				<ProbTable>uniform</ProbTable>
+			</Entry>
+		</Parameter>
+	</CondProb>
+</InitialStateBelief>
+
+<StateTransitionFunction>
+	<CondProb>
+		<Var>robot_pos_1</Var>
+		<Parent>action robot_pos_0</Parent>
+		<Parameter type="TBL">
+			<Entry>
+				<Instance>A_0 Rpos_0_0_0 Rpos_0_0_0</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_0 Rpos_1_1_0 Rpos_1_1_0</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_0 Rpos_2_2_0 Rpos_2_2_0</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_0 Rpos_3_3_0 Rpos_3_3_0</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_0 Rpos_4_4_0 Rpos_4_4_0</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_0 Rpos_5_0_1 Rpos_5_0_1</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_0 Rpos_6_1_1 Rpos_6_1_1</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_0 Rpos_7_2_1 Rpos_7_2_1</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_0 Rpos_8_3_1 Rpos_8_3_1</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_0 Rpos_9_4_1 Rpos_9_4_1</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_0 Rpos_10_0_2 Rpos_10_0_2</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_0 Rpos_11_1_2 Rpos_11_1_2</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_0 Rpos_12_2_2 Rpos_12_2_2</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_0 Rpos_13_3_2 Rpos_13_3_2</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_0 Rpos_14_4_2 Rpos_14_4_2</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_0 Rpos_15_0_3 Rpos_15_0_3</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_0 Rpos_16_1_3 Rpos_16_1_3</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_0 Rpos_17_2_3 Rpos_17_2_3</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_0 Rpos_18_3_3 Rpos_18_3_3</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_0 Rpos_19_4_3 Rpos_19_4_3</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_0 Rpos_20_0_4 Rpos_20_0_4</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_0 Rpos_21_1_4 Rpos_21_1_4</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_0 Rpos_22_2_4 Rpos_22_2_4</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_0 Rpos_23_3_4 Rpos_23_3_4</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_0 Rpos_24_4_4 Rpos_24_4_4</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_1 Rpos_0_0_0 Rpos_5_0_1</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_1 Rpos_1_1_0 Rpos_6_1_1</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_1 Rpos_2_2_0 Rpos_7_2_1</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_1 Rpos_3_3_0 Rpos_8_3_1</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_1 Rpos_4_4_0 Rpos_9_4_1</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_1 Rpos_5_0_1 Rpos_10_0_2</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_1 Rpos_6_1_1 Rpos_11_1_2</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_1 Rpos_7_2_1 Rpos_12_2_2</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_1 Rpos_8_3_1 Rpos_13_3_2</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_1 Rpos_9_4_1 Rpos_14_4_2</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_1 Rpos_10_0_2 Rpos_15_0_3</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_1 Rpos_11_1_2 Rpos_16_1_3</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_1 Rpos_12_2_2 Rpos_17_2_3</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_1 Rpos_13_3_2 Rpos_18_3_3</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_1 Rpos_14_4_2 Rpos_19_4_3</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_1 Rpos_15_0_3 Rpos_20_0_4</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_1 Rpos_16_1_3 Rpos_21_1_4</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_1 Rpos_17_2_3 Rpos_22_2_4</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_1 Rpos_18_3_3 Rpos_23_3_4</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_1 Rpos_19_4_3 Rpos_24_4_4</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_1 Rpos_20_0_4 Rpos_20_0_4</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_1 Rpos_21_1_4 Rpos_21_1_4</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_1 Rpos_22_2_4 Rpos_22_2_4</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_1 Rpos_23_3_4 Rpos_23_3_4</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_1 Rpos_24_4_4 Rpos_24_4_4</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_2 Rpos_0_0_0 Rpos_1_1_0</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_2 Rpos_1_1_0 Rpos_2_2_0</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_2 Rpos_2_2_0 Rpos_3_3_0</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_2 Rpos_3_3_0 Rpos_4_4_0</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_2 Rpos_4_4_0 Rpos_4_4_0</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_2 Rpos_5_0_1 Rpos_6_1_1</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_2 Rpos_6_1_1 Rpos_7_2_1</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_2 Rpos_7_2_1 Rpos_8_3_1</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_2 Rpos_8_3_1 Rpos_9_4_1</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_2 Rpos_9_4_1 Rpos_9_4_1</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_2 Rpos_10_0_2 Rpos_11_1_2</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_2 Rpos_11_1_2 Rpos_12_2_2</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_2 Rpos_12_2_2 Rpos_13_3_2</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_2 Rpos_13_3_2 Rpos_14_4_2</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_2 Rpos_14_4_2 Rpos_14_4_2</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_2 Rpos_15_0_3 Rpos_16_1_3</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_2 Rpos_16_1_3 Rpos_17_2_3</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_2 Rpos_17_2_3 Rpos_18_3_3</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_2 Rpos_18_3_3 Rpos_19_4_3</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_2 Rpos_19_4_3 Rpos_19_4_3</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_2 Rpos_20_0_4 Rpos_21_1_4</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_2 Rpos_21_1_4 Rpos_22_2_4</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_2 Rpos_22_2_4 Rpos_23_3_4</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_2 Rpos_23_3_4 Rpos_24_4_4</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_2 Rpos_24_4_4 Rpos_24_4_4</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_3 Rpos_0_0_0 Rpos_0_0_0</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_3 Rpos_1_1_0 Rpos_1_1_0</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_3 Rpos_2_2_0 Rpos_2_2_0</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_3 Rpos_3_3_0 Rpos_3_3_0</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_3 Rpos_4_4_0 Rpos_4_4_0</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_3 Rpos_5_0_1 Rpos_0_0_0</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_3 Rpos_6_1_1 Rpos_1_1_0</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_3 Rpos_7_2_1 Rpos_2_2_0</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_3 Rpos_8_3_1 Rpos_3_3_0</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_3 Rpos_9_4_1 Rpos_4_4_0</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_3 Rpos_10_0_2 Rpos_5_0_1</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_3 Rpos_11_1_2 Rpos_6_1_1</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_3 Rpos_12_2_2 Rpos_7_2_1</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_3 Rpos_13_3_2 Rpos_8_3_1</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_3 Rpos_14_4_2 Rpos_9_4_1</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_3 Rpos_15_0_3 Rpos_10_0_2</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_3 Rpos_16_1_3 Rpos_11_1_2</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_3 Rpos_17_2_3 Rpos_12_2_2</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_3 Rpos_18_3_3 Rpos_13_3_2</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_3 Rpos_19_4_3 Rpos_14_4_2</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_3 Rpos_20_0_4 Rpos_15_0_3</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_3 Rpos_21_1_4 Rpos_16_1_3</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_3 Rpos_22_2_4 Rpos_17_2_3</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_3 Rpos_23_3_4 Rpos_18_3_3</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_3 Rpos_24_4_4 Rpos_19_4_3</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_4 Rpos_0_0_0 Rpos_0_0_0</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_4 Rpos_1_1_0 Rpos_0_0_0</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_4 Rpos_2_2_0 Rpos_1_1_0</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_4 Rpos_3_3_0 Rpos_2_2_0</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_4 Rpos_4_4_0 Rpos_3_3_0</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_4 Rpos_5_0_1 Rpos_5_0_1</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_4 Rpos_6_1_1 Rpos_5_0_1</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_4 Rpos_7_2_1 Rpos_6_1_1</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_4 Rpos_8_3_1 Rpos_7_2_1</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_4 Rpos_9_4_1 Rpos_8_3_1</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_4 Rpos_10_0_2 Rpos_10_0_2</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_4 Rpos_11_1_2 Rpos_10_0_2</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_4 Rpos_12_2_2 Rpos_11_1_2</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_4 Rpos_13_3_2 Rpos_12_2_2</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_4 Rpos_14_4_2 Rpos_13_3_2</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_4 Rpos_15_0_3 Rpos_15_0_3</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_4 Rpos_16_1_3 Rpos_15_0_3</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_4 Rpos_17_2_3 Rpos_16_1_3</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_4 Rpos_18_3_3 Rpos_17_2_3</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_4 Rpos_19_4_3 Rpos_18_3_3</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_4 Rpos_20_0_4 Rpos_20_0_4</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_4 Rpos_21_1_4 Rpos_20_0_4</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_4 Rpos_22_2_4 Rpos_21_1_4</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_4 Rpos_23_3_4 Rpos_22_2_4</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>A_4 Rpos_24_4_4 Rpos_23_3_4</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+		</Parameter>
+	</CondProb>
+	<CondProb>
+		<Var>worker_pos_1</Var>
+		<Parent>worker_vel_0 worker_pos_0</Parent>
+		<Parameter type="TBL">
+			<Entry>
+				<Instance>Wvel_0 Wpos_0_0_0 Wpos_0_0_0</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_0 Wpos_1_1_0 Wpos_1_1_0</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_0 Wpos_2_2_0 Wpos_2_2_0</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_0 Wpos_3_3_0 Wpos_3_3_0</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_0 Wpos_4_4_0 Wpos_4_4_0</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_0 Wpos_5_0_1 Wpos_5_0_1</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_0 Wpos_6_1_1 Wpos_6_1_1</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_0 Wpos_7_2_1 Wpos_7_2_1</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_0 Wpos_8_3_1 Wpos_8_3_1</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_0 Wpos_9_4_1 Wpos_9_4_1</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_0 Wpos_10_0_2 Wpos_10_0_2</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_0 Wpos_11_1_2 Wpos_11_1_2</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_0 Wpos_12_2_2 Wpos_12_2_2</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_0 Wpos_13_3_2 Wpos_13_3_2</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_0 Wpos_14_4_2 Wpos_14_4_2</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_0 Wpos_15_0_3 Wpos_15_0_3</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_0 Wpos_16_1_3 Wpos_16_1_3</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_0 Wpos_17_2_3 Wpos_17_2_3</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_0 Wpos_18_3_3 Wpos_18_3_3</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_0 Wpos_19_4_3 Wpos_19_4_3</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_0 Wpos_20_0_4 Wpos_20_0_4</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_0 Wpos_21_1_4 Wpos_21_1_4</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_0 Wpos_22_2_4 Wpos_22_2_4</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_0 Wpos_23_3_4 Wpos_23_3_4</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_0 Wpos_24_4_4 Wpos_24_4_4</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_1 Wpos_0_0_0 Wpos_5_0_1</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_1 Wpos_1_1_0 Wpos_6_1_1</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_1 Wpos_2_2_0 Wpos_7_2_1</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_1 Wpos_3_3_0 Wpos_8_3_1</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_1 Wpos_4_4_0 Wpos_9_4_1</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_1 Wpos_5_0_1 Wpos_10_0_2</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_1 Wpos_6_1_1 Wpos_11_1_2</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_1 Wpos_7_2_1 Wpos_12_2_2</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_1 Wpos_8_3_1 Wpos_13_3_2</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_1 Wpos_9_4_1 Wpos_14_4_2</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_1 Wpos_10_0_2 Wpos_15_0_3</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_1 Wpos_11_1_2 Wpos_16_1_3</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_1 Wpos_12_2_2 Wpos_17_2_3</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_1 Wpos_13_3_2 Wpos_18_3_3</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_1 Wpos_14_4_2 Wpos_19_4_3</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_1 Wpos_15_0_3 Wpos_20_0_4</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_1 Wpos_16_1_3 Wpos_21_1_4</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_1 Wpos_17_2_3 Wpos_22_2_4</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_1 Wpos_18_3_3 Wpos_23_3_4</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_1 Wpos_19_4_3 Wpos_24_4_4</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_1 Wpos_20_0_4 Wpos_20_0_4</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_1 Wpos_21_1_4 Wpos_21_1_4</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_1 Wpos_22_2_4 Wpos_22_2_4</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_1 Wpos_23_3_4 Wpos_23_3_4</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_1 Wpos_24_4_4 Wpos_24_4_4</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_2 Wpos_0_0_0 Wpos_1_1_0</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_2 Wpos_1_1_0 Wpos_2_2_0</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_2 Wpos_2_2_0 Wpos_3_3_0</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_2 Wpos_3_3_0 Wpos_4_4_0</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_2 Wpos_4_4_0 Wpos_4_4_0</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_2 Wpos_5_0_1 Wpos_6_1_1</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_2 Wpos_6_1_1 Wpos_7_2_1</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_2 Wpos_7_2_1 Wpos_8_3_1</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_2 Wpos_8_3_1 Wpos_9_4_1</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_2 Wpos_9_4_1 Wpos_9_4_1</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_2 Wpos_10_0_2 Wpos_11_1_2</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_2 Wpos_11_1_2 Wpos_12_2_2</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_2 Wpos_12_2_2 Wpos_13_3_2</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_2 Wpos_13_3_2 Wpos_14_4_2</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_2 Wpos_14_4_2 Wpos_14_4_2</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_2 Wpos_15_0_3 Wpos_16_1_3</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_2 Wpos_16_1_3 Wpos_17_2_3</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_2 Wpos_17_2_3 Wpos_18_3_3</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_2 Wpos_18_3_3 Wpos_19_4_3</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_2 Wpos_19_4_3 Wpos_19_4_3</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_2 Wpos_20_0_4 Wpos_21_1_4</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_2 Wpos_21_1_4 Wpos_22_2_4</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_2 Wpos_22_2_4 Wpos_23_3_4</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_2 Wpos_23_3_4 Wpos_24_4_4</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_2 Wpos_24_4_4 Wpos_24_4_4</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_3 Wpos_0_0_0 Wpos_0_0_0</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_3 Wpos_1_1_0 Wpos_1_1_0</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_3 Wpos_2_2_0 Wpos_2_2_0</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_3 Wpos_3_3_0 Wpos_3_3_0</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_3 Wpos_4_4_0 Wpos_4_4_0</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_3 Wpos_5_0_1 Wpos_0_0_0</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_3 Wpos_6_1_1 Wpos_1_1_0</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_3 Wpos_7_2_1 Wpos_2_2_0</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_3 Wpos_8_3_1 Wpos_3_3_0</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_3 Wpos_9_4_1 Wpos_4_4_0</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_3 Wpos_10_0_2 Wpos_5_0_1</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_3 Wpos_11_1_2 Wpos_6_1_1</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_3 Wpos_12_2_2 Wpos_7_2_1</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_3 Wpos_13_3_2 Wpos_8_3_1</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_3 Wpos_14_4_2 Wpos_9_4_1</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_3 Wpos_15_0_3 Wpos_10_0_2</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_3 Wpos_16_1_3 Wpos_11_1_2</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_3 Wpos_17_2_3 Wpos_12_2_2</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_3 Wpos_18_3_3 Wpos_13_3_2</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_3 Wpos_19_4_3 Wpos_14_4_2</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_3 Wpos_20_0_4 Wpos_15_0_3</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_3 Wpos_21_1_4 Wpos_16_1_3</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_3 Wpos_22_2_4 Wpos_17_2_3</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_3 Wpos_23_3_4 Wpos_18_3_3</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_3 Wpos_24_4_4 Wpos_19_4_3</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_4 Wpos_0_0_0 Wpos_0_0_0</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_4 Wpos_1_1_0 Wpos_0_0_0</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_4 Wpos_2_2_0 Wpos_1_1_0</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_4 Wpos_3_3_0 Wpos_2_2_0</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_4 Wpos_4_4_0 Wpos_3_3_0</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_4 Wpos_5_0_1 Wpos_5_0_1</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_4 Wpos_6_1_1 Wpos_5_0_1</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_4 Wpos_7_2_1 Wpos_6_1_1</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_4 Wpos_8_3_1 Wpos_7_2_1</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_4 Wpos_9_4_1 Wpos_8_3_1</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_4 Wpos_10_0_2 Wpos_10_0_2</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_4 Wpos_11_1_2 Wpos_10_0_2</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_4 Wpos_12_2_2 Wpos_11_1_2</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_4 Wpos_13_3_2 Wpos_12_2_2</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_4 Wpos_14_4_2 Wpos_13_3_2</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_4 Wpos_15_0_3 Wpos_15_0_3</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_4 Wpos_16_1_3 Wpos_15_0_3</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_4 Wpos_17_2_3 Wpos_16_1_3</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_4 Wpos_18_3_3 Wpos_17_2_3</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_4 Wpos_19_4_3 Wpos_18_3_3</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_4 Wpos_20_0_4 Wpos_20_0_4</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_4 Wpos_21_1_4 Wpos_20_0_4</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_4 Wpos_22_2_4 Wpos_21_1_4</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_4 Wpos_23_3_4 Wpos_22_2_4</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wvel_4 Wpos_24_4_4 Wpos_23_3_4</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+		</Parameter>
+	</CondProb>
+	<CondProb>
+		<Var>worker_vel_1</Var>
+		<Parent>worker_pos_0 worker_goal_0</Parent>
+		<Parameter type="TBL">
+			<Entry>
+				<Instance>Wpos_0_0_0 Wgoal_0 Wvel_2</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wpos_1_1_0 Wgoal_0 Wvel_2</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wpos_2_2_0 Wgoal_0 Wvel_0</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wpos_3_3_0 Wgoal_0 Wvel_4</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wpos_4_4_0 Wgoal_0 Wvel_4</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wpos_5_0_1 Wgoal_0 Wvel_2</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wpos_6_1_1 Wgoal_0 Wvel_2</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wpos_7_2_1 Wgoal_0 Wvel_3</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wpos_8_3_1 Wgoal_0 Wvel_3</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wpos_9_4_1 Wgoal_0 Wvel_3</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wpos_10_0_2 Wgoal_0 Wvel_2</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wpos_11_1_2 Wgoal_0 Wvel_2</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wpos_12_2_2 Wgoal_0 Wvel_3</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wpos_13_3_2 Wgoal_0 Wvel_3</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wpos_14_4_2 Wgoal_0 Wvel_3</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wpos_15_0_3 Wgoal_0 Wvel_2</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wpos_16_1_3 Wgoal_0 Wvel_2</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wpos_17_2_3 Wgoal_0 Wvel_3</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wpos_18_3_3 Wgoal_0 Wvel_3</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wpos_19_4_3 Wgoal_0 Wvel_3</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wpos_20_0_4 Wgoal_0 Wvel_2</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wpos_21_1_4 Wgoal_0 Wvel_2</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wpos_22_2_4 Wgoal_0 Wvel_3</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wpos_23_3_4 Wgoal_0 Wvel_3</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wpos_24_4_4 Wgoal_0 Wvel_3</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wpos_0_0_0 Wgoal_1 Wvel_1</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wpos_1_1_0 Wgoal_1 Wvel_1</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wpos_2_2_0 Wgoal_1 Wvel_1</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wpos_3_3_0 Wgoal_1 Wvel_1</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wpos_4_4_0 Wgoal_1 Wvel_1</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wpos_5_0_1 Wgoal_1 Wvel_1</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wpos_6_1_1 Wgoal_1 Wvel_1</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wpos_7_2_1 Wgoal_1 Wvel_1</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wpos_8_3_1 Wgoal_1 Wvel_1</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wpos_9_4_1 Wgoal_1 Wvel_1</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wpos_10_0_2 Wgoal_1 Wvel_0</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wpos_11_1_2 Wgoal_1 Wvel_4</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wpos_12_2_2 Wgoal_1 Wvel_4</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wpos_13_3_2 Wgoal_1 Wvel_4</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wpos_14_4_2 Wgoal_1 Wvel_4</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wpos_15_0_3 Wgoal_1 Wvel_3</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wpos_16_1_3 Wgoal_1 Wvel_3</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wpos_17_2_3 Wgoal_1 Wvel_3</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wpos_18_3_3 Wgoal_1 Wvel_3</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wpos_19_4_3 Wgoal_1 Wvel_3</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wpos_20_0_4 Wgoal_1 Wvel_3</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wpos_21_1_4 Wgoal_1 Wvel_3</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wpos_22_2_4 Wgoal_1 Wvel_3</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wpos_23_3_4 Wgoal_1 Wvel_3</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wpos_24_4_4 Wgoal_1 Wvel_3</Instance>
+				<ProbTable>1.0</ProbTable>
+			</Entry>
+		</Parameter>
+	</CondProb>
+	<CondProb>
+		<Var>worker_goal_1</Var>
+		<Parent>worker_goal_0</Parent>
+		<Parameter type="TBL">
+			<Entry>
+				<Instance> - - </Instance>
+				<ProbTable>identity</ProbTable>
+			</Entry>
+		</Parameter>
+	</CondProb>
+</StateTransitionFunction>
+
+<ObsFunction>
+	<CondProb>
+		<Var>obs_sensor</Var>
+		<Parent>worker_pos_1 worker_vel_1 worker_goal_1</Parent>
+		<Parameter type="TBL">
+			<Entry>
+				<Instance> * * * -</Instance>
+				<ProbTable>0.5 0.5 </ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wpos_0_0_0 Wvel_1 * -</Instance>
+				<ProbTable>0.0 1.0 </ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wpos_0_0_0 Wvel_2 * -</Instance>
+				<ProbTable>1.0 0.0 </ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wpos_1_1_0 Wvel_1 * -</Instance>
+				<ProbTable>0.0 1.0 </ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wpos_1_1_0 Wvel_2 * -</Instance>
+				<ProbTable>1.0 0.0 </ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wpos_2_2_0 Wvel_0 * -</Instance>
+				<ProbTable>1.0 0.0 </ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wpos_2_2_0 Wvel_1 * -</Instance>
+				<ProbTable>0.0 1.0 </ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wpos_3_3_0 Wvel_1 * -</Instance>
+				<ProbTable>0.0 1.0 </ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wpos_3_3_0 Wvel_4 * -</Instance>
+				<ProbTable>1.0 0.0 </ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wpos_4_4_0 Wvel_1 * -</Instance>
+				<ProbTable>0.0 1.0 </ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wpos_4_4_0 Wvel_4 * -</Instance>
+				<ProbTable>1.0 0.0 </ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wpos_5_0_1 Wvel_1 * -</Instance>
+				<ProbTable>0.0 1.0 </ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wpos_5_0_1 Wvel_2 * -</Instance>
+				<ProbTable>1.0 0.0 </ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wpos_6_1_1 Wvel_1 * -</Instance>
+				<ProbTable>0.0 1.0 </ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wpos_6_1_1 Wvel_2 * -</Instance>
+				<ProbTable>1.0 0.0 </ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wpos_7_2_1 Wvel_1 * -</Instance>
+				<ProbTable>0.0 1.0 </ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wpos_7_2_1 Wvel_3 * -</Instance>
+				<ProbTable>1.0 0.0 </ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wpos_8_3_1 Wvel_1 * -</Instance>
+				<ProbTable>0.0 1.0 </ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wpos_8_3_1 Wvel_3 * -</Instance>
+				<ProbTable>1.0 0.0 </ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wpos_9_4_1 Wvel_1 * -</Instance>
+				<ProbTable>0.0 1.0 </ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wpos_9_4_1 Wvel_3 * -</Instance>
+				<ProbTable>1.0 0.0 </ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wpos_10_0_2 Wvel_0 * -</Instance>
+				<ProbTable>0.0 1.0 </ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wpos_10_0_2 Wvel_2 * -</Instance>
+				<ProbTable>1.0 0.0 </ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wpos_11_1_2 Wvel_2 * -</Instance>
+				<ProbTable>1.0 0.0 </ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wpos_11_1_2 Wvel_4 * -</Instance>
+				<ProbTable>0.0 1.0 </ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wpos_12_2_2 Wvel_3 * -</Instance>
+				<ProbTable>1.0 0.0 </ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wpos_12_2_2 Wvel_4 * -</Instance>
+				<ProbTable>0.0 1.0 </ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wpos_13_3_2 Wvel_3 * -</Instance>
+				<ProbTable>1.0 0.0 </ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wpos_13_3_2 Wvel_4 * -</Instance>
+				<ProbTable>0.0 1.0 </ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wpos_14_4_2 Wvel_3 * -</Instance>
+				<ProbTable>1.0 0.0 </ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wpos_14_4_2 Wvel_4 * -</Instance>
+				<ProbTable>0.0 1.0 </ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wpos_15_0_3 Wvel_2 * -</Instance>
+				<ProbTable>1.0 0.0 </ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wpos_15_0_3 Wvel_3 * -</Instance>
+				<ProbTable>0.0 1.0 </ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wpos_16_1_3 Wvel_2 * -</Instance>
+				<ProbTable>1.0 0.0 </ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wpos_16_1_3 Wvel_3 * -</Instance>
+				<ProbTable>0.0 1.0 </ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wpos_17_2_3 Wvel_3 * -</Instance>
+				<ProbTable>0.5 0.5 </ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wpos_18_3_3 Wvel_3 * -</Instance>
+				<ProbTable>0.5 0.5 </ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wpos_19_4_3 Wvel_3 * -</Instance>
+				<ProbTable>0.5 0.5 </ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wpos_20_0_4 Wvel_2 * -</Instance>
+				<ProbTable>1.0 0.0 </ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wpos_20_0_4 Wvel_3 * -</Instance>
+				<ProbTable>0.0 1.0 </ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wpos_21_1_4 Wvel_2 * -</Instance>
+				<ProbTable>1.0 0.0 </ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wpos_21_1_4 Wvel_3 * -</Instance>
+				<ProbTable>0.0 1.0 </ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wpos_22_2_4 Wvel_3 * -</Instance>
+				<ProbTable>0.5 0.5 </ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wpos_23_3_4 Wvel_3 * -</Instance>
+				<ProbTable>0.5 0.5 </ProbTable>
+			</Entry>
+			<Entry>
+				<Instance>Wpos_24_4_4 Wvel_3 * -</Instance>
+				<ProbTable>0.5 0.5 </ProbTable>
+			</Entry>
+		</Parameter>
+	</CondProb>
+</ObsFunction>
+
+<RewardFunction>
+	<Func>
+		<Var>reward</Var>
+		<Parent>action robot_pos_0 worker_pos_0</Parent>
+		<Parameter type="TBL">
+			<Entry>
+				<Instance>* Rpos_24_4_4 *</Instance>
+				<ValueTable> 10 </ValueTable>
+			</Entry>
+			<Entry>
+				<Instance> * Rpos_0_0_0 Wpos_0_0_0 </Instance>
+				<ValueTable> -20 </ValueTable>
+			</Entry>
+			<Entry>
+				<Instance> * Rpos_1_1_0 Wpos_1_1_0 </Instance>
+				<ValueTable> -20 </ValueTable>
+			</Entry>
+			<Entry>
+				<Instance> * Rpos_2_2_0 Wpos_2_2_0 </Instance>
+				<ValueTable> -20 </ValueTable>
+			</Entry>
+			<Entry>
+				<Instance> * Rpos_3_3_0 Wpos_3_3_0 </Instance>
+				<ValueTable> -20 </ValueTable>
+			</Entry>
+			<Entry>
+				<Instance> * Rpos_4_4_0 Wpos_4_4_0 </Instance>
+				<ValueTable> -20 </ValueTable>
+			</Entry>
+			<Entry>
+				<Instance> * Rpos_5_0_1 Wpos_5_0_1 </Instance>
+				<ValueTable> -20 </ValueTable>
+			</Entry>
+			<Entry>
+				<Instance> * Rpos_6_1_1 Wpos_6_1_1 </Instance>
+				<ValueTable> -20 </ValueTable>
+			</Entry>
+			<Entry>
+				<Instance> * Rpos_7_2_1 Wpos_7_2_1 </Instance>
+				<ValueTable> -20 </ValueTable>
+			</Entry>
+			<Entry>
+				<Instance> * Rpos_8_3_1 Wpos_8_3_1 </Instance>
+				<ValueTable> -20 </ValueTable>
+			</Entry>
+			<Entry>
+				<Instance> * Rpos_9_4_1 Wpos_9_4_1 </Instance>
+				<ValueTable> -20 </ValueTable>
+			</Entry>
+			<Entry>
+				<Instance> * Rpos_10_0_2 Wpos_10_0_2 </Instance>
+				<ValueTable> -20 </ValueTable>
+			</Entry>
+			<Entry>
+				<Instance> * Rpos_11_1_2 Wpos_11_1_2 </Instance>
+				<ValueTable> -20 </ValueTable>
+			</Entry>
+			<Entry>
+				<Instance> * Rpos_12_2_2 Wpos_12_2_2 </Instance>
+				<ValueTable> -20 </ValueTable>
+			</Entry>
+			<Entry>
+				<Instance> * Rpos_13_3_2 Wpos_13_3_2 </Instance>
+				<ValueTable> -20 </ValueTable>
+			</Entry>
+			<Entry>
+				<Instance> * Rpos_14_4_2 Wpos_14_4_2 </Instance>
+				<ValueTable> -20 </ValueTable>
+			</Entry>
+			<Entry>
+				<Instance> * Rpos_15_0_3 Wpos_15_0_3 </Instance>
+				<ValueTable> -20 </ValueTable>
+			</Entry>
+			<Entry>
+				<Instance> * Rpos_16_1_3 Wpos_16_1_3 </Instance>
+				<ValueTable> -20 </ValueTable>
+			</Entry>
+			<Entry>
+				<Instance> * Rpos_17_2_3 Wpos_17_2_3 </Instance>
+				<ValueTable> -20 </ValueTable>
+			</Entry>
+			<Entry>
+				<Instance> * Rpos_18_3_3 Wpos_18_3_3 </Instance>
+				<ValueTable> -20 </ValueTable>
+			</Entry>
+			<Entry>
+				<Instance> * Rpos_19_4_3 Wpos_19_4_3 </Instance>
+				<ValueTable> -20 </ValueTable>
+			</Entry>
+			<Entry>
+				<Instance> * Rpos_20_0_4 Wpos_20_0_4 </Instance>
+				<ValueTable> -20 </ValueTable>
+			</Entry>
+			<Entry>
+				<Instance> * Rpos_21_1_4 Wpos_21_1_4 </Instance>
+				<ValueTable> -20 </ValueTable>
+			</Entry>
+			<Entry>
+				<Instance> * Rpos_22_2_4 Wpos_22_2_4 </Instance>
+				<ValueTable> -20 </ValueTable>
+			</Entry>
+			<Entry>
+				<Instance> * Rpos_23_3_4 Wpos_23_3_4 </Instance>
+				<ValueTable> -20 </ValueTable>
+			</Entry>
+			<Entry>
+				<Instance> * Rpos_24_4_4 Wpos_24_4_4 </Instance>
+				<ValueTable> -20 </ValueTable>
+			</Entry>
+		</Parameter>
+	</Func>
+</RewardFunction>
+
+</pomdpx>
