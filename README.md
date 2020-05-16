@@ -22,11 +22,13 @@ Finally, you will see outputs of the simulated results.
 ## POMDP model
 Consider a map of size XXXXXXX \times XXXXXX as shown in the figure above. The two goals labed in XXXX are the goals that will be assigned to the worker. The XXXX is the robot's goal. We formulate the POMDP model as fellow:
 
-States = {R_x, R_y, W_x, W_y, W_a, W_g}
+States = {R_x, R_y, W_x, W_y, W_v, W_g, W_a}
+
 Actions = {Stop, Up, Right, Down, Left}
+
 Observations = {W_x, W_y, W_vel, W_ori}
 
-The states include the robot's position (R_x and R_y), the workers position (W_x and W_y) and the worker's movement (W_a) including stop and going up, right, down or left one grid cell. The robot's action will also be stop and going up, right, down or left one grid cell. Both the robot and worker's position and motion is fully observable. The only unobservable state will be the worker's assigned goal (W_g).
+The states include the robot's position (R_x and R_y), the workers position (W_x and W_y) and the worker's movement (W_v) including stop and going up, right, down or left one grid cell. The robot's action will also be stop and going up, right, down or left one grid cell. Both the robot and worker's position and motion is fully observable. The unobservable states will be the worker's assigned goal (W_g) and its adaptivness (W_a) to the robot.
 
 As for the transition function, it describes the locmotion of both the robot as it can move to neighboring cells that are horizontally or vertically adjacent to the one it is in. Additionally, we include the locmotion of the worker with an extra constraint based on the worker's assigned goal. For example, the two trajectories shows the exact grids the worker will take when assigned reach one of the two goals. Therefore, the extra constriant is to express the influence of W_g (an information included in the state space).
 
