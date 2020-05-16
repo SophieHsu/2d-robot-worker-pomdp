@@ -1,0 +1,57 @@
+Robot[0,0] Worker[2,6]
+Belief of the worker's goal:
+G_w1[0,1] = 0.500	G_w2[0,0] = 0.500	
+Robot's next move: right 1 grid
+Worker's next move: down 1 grid
+
+Robot[0,1] Worker[1,6]
+Belief of the worker's goal:
+G_w1[0,1] = 0.250	G_w2[0,0] = 0.750	
+Robot's next move: up 1 grid
+Worker's next move: down 1 grid
+
+Robot[1,1] Worker[0,6]
+Belief of the worker's goal:
+G_w1[0,1] = 0.250	G_w2[0,0] = 0.750	
+Robot's next move: right 1 grid
+Worker's next move: left 1 grid
+
+Robot[1,2] Worker[0,5]
+Belief of the worker's goal:
+G_w1[0,1] = 0.126	G_w2[0,0] = 0.874	
+Robot's next move: stop
+Worker's next move: left 1 grid
+
+Robot[1,2] Worker[0,4]
+Belief of the worker's goal:
+G_w1[0,1] = 0.063	G_w2[0,0] = 0.937	
+Robot's next move: right 1 grid
+Worker's next move: left 1 grid
+
+Robot[1,3] Worker[0,3]
+Belief of the worker's goal:
+G_w1[0,1] = 0.032	G_w2[0,0] = 0.968	
+Robot's next move: right 1 grid
+Worker's next move: left 1 grid
+
+Robot[1,4] Worker[0,2]
+Belief of the worker's goal:
+G_w1[0,1] = 0.017	G_w2[0,0] = 0.983	
+Robot's next move: right 1 grid
+Worker's next move: left 1 grid
+
+Robot[1,5] Worker[0,1]
+Belief of the worker's goal:
+G_w1[0,1] = 0.009	G_w2[0,0] = 0.991	
+Robot's next move: down 1 grid
+Worker's next move: left 1 grid
+
+Robot[0,5] Worker[0,0]
+Belief of the worker's goal:
+G_w1[0,1] = 0.009	G_w2[0,0] = 0.991	
+Robot's next move: right 1 grid
+Worker's next move: stop
+
+Robot[0,6] Worker[0,0]
+Belief of the worker's goal:
+G_w1[0,1] = 0.009	G_w2[0,0] = 0.991	
