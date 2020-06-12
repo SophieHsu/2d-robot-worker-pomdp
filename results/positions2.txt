@@ -1,0 +1,99 @@
+
+Map: robot's goal[6,0], worker's goal[0,0]
+o	o	o	o	o	o	W	
+o	o	o	o	o	o	o	
+R(G_w)	o	o	o	o	o	G_r	
+
+Robot[0,0] Worker[2,6]
+Belief of the worker's goal:
+G_w1[0,1] = 0.500	G_w2[0,0] = 0.500	
+adaptive levels = [0.200	0.200	0.200	0.200	0.200	]
+
+
+Map: robot's goal[6,0], worker's goal[0,0]
+o	o	o	o	o	o	o	
+o	o	o	o	o	o	W	
+G_w	R	o	o	o	o	G_r	
+
+Robot moved: right 1 grid
+Worker moved: down 1 grid
+Robot[0,1] Worker[1,6]
+Belief of the worker's goal:
+G_w1[0,1] = 0.500	G_w2[0,0] = 0.500	
+adaptive levels = [0.200	0.200	0.200	0.200	0.200	]
+
+
+Map: robot's goal[6,0], worker's goal[0,0]
+o	o	o	o	o	o	o	
+o	o	o	o	o	o	o	
+G_w	o	R	o	o	o	W(G_r)	
+
+Robot moved: right 1 grid
+Worker moved: down 1 grid
+Robot[0,2] Worker[0,6]
+Belief of the worker's goal:
+G_w1[0,1] = 0.250	G_w2[0,0] = 0.750	
+adaptive levels = [0.200	0.200	0.200	0.200	0.200	]
+
+
+Map: robot's goal[6,0], worker's goal[0,0]
+o	o	o	o	o	o	o	
+o	o	o	o	o	o	o	
+G_w	o	o	R	o	W	G_r	
+
+Robot moved: right 1 grid
+Worker moved: left 1 grid
+Robot[0,3] Worker[0,5]
+Belief of the worker's goal:
+G_w1[0,1] = 0.126	G_w2[0,0] = 0.874	
+adaptive levels = [0.200	0.200	0.200	0.200	0.200	]
+
+
+Map: robot's goal[6,0], worker's goal[0,0]
+o	o	o	o	o	o	o	
+o	o	o	o	o	W	o	
+G_w	o	o	o	R	o	G_r	
+
+Robot moved: right 1 grid
+Worker moved: up 1 grid
+Robot[0,4] Worker[1,5]
+Belief of the worker's goal:
+G_w1[0,1] = 0.313	G_w2[0,0] = 0.687	
+adaptive levels = [0.057	0.129	0.200	0.271	0.343	]
+
+
+Map: robot's goal[6,0], worker's goal[0,0]
+o	o	o	o	o	o	o	
+o	o	o	o	W	o	o	
+G_w	o	o	o	o	R	G_r	
+
+Robot moved: right 1 grid
+Worker moved: left 1 grid
+Robot[0,5] Worker[1,4]
+Belief of the worker's goal:
+G_w1[0,1] = 0.157	G_w2[0,0] = 0.843	
+adaptive levels = [0.016	0.108	0.200	0.292	0.384	]
+
+
+Map: robot's goal[6,0], worker's goal[0,0]
+o	o	o	o	o	o	o	
+o	o	o	W	o	o	o	
+G_w	o	o	o	o	o	R(G_r)	
+
+Robot moved: right 1 grid
+Worker moved: left 1 grid
+Robot[0,6] Worker[1,3]
+Belief of the worker's goal:
+G_w1[0,1] = 0.328	G_w2[0,0] = 0.672	
+adaptive levels = [0.005	0.102	0.200	0.298	0.395	]
+
+
+Map: robot's goal[6,0], worker's goal[0,0]
+o	o	o	o	o	o	o	
+o	o	o	W	o	o	o	
+G_w	o	o	o	o	o	R(G_r)	
+
+Robot[0,6] Worker[1,3]
+Belief of the worker's goal:
+G_w1[0,1] = 0.328	G_w2[0,0] = 0.672	
+adaptive levels = [0.005	0.102	0.200	0.298	0.395	]
