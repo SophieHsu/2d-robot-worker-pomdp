@@ -14,11 +14,12 @@ from random import random
 seed(1)
 
 WORKERGOALIDX = 2 # 1 or 2
-WORKERADPIDX = 2 # 0, 1, 2, 3, 4
+WORKERADPIDX = 4 # 0, 1, 2, 3, 4
 BELIEFGAMMA = 0.5 # the level of effect of the new observations (lower means lesser)
+BELIEFBETA = 0.5
 
 ### Outputs and prints
-def printValueMap(simMapFile, lowerX, lowerY, upperX, upperY, valueMatrix, matrixName):
+def printValueMap(opfile, lowerX, lowerY, upperX, upperY, valueMatrix, matrixName):
 	global rewardFile
 	tmpString = matrixName + ":\n"
 	print(matrixName, ":")
@@ -30,9 +31,9 @@ def printValueMap(simMapFile, lowerX, lowerY, upperX, upperY, valueMatrix, matri
 
 		print("\n")
 		rewardFile.write("\n")
-def printCurrMap(simMapFile, spaceArr, currRobotPos, currWorkerPos, robotGoalIdx, workerGoalIdx, goalPositions):
+def printCurrMap(opfile, spaceArr, currRobotPos, currWorkerPos, robotGoalIdx, workerGoalIdx, goalPositions):
 	print("\nMap: robot\'s goal[" + str(goalPositions[robotGoalIdx][1]) + ',' + str(goalPositions[robotGoalIdx][0]) + '], worker\'s goal[' + str(goalPositions[workerGoalIdx][1]) + ',' + str(goalPositions[workerGoalIdx][0]) + ']')
-	simMapFile.write("\nMap: robot\'s goal[" + str(goalPositions[robotGoalIdx][1]) + ',' + str(goalPositions[robotGoalIdx][0]) + '], worker\'s goal[' + str(goalPositions[workerGoalIdx][1]) + ',' + str(goalPositions[workerGoalIdx][0]) + ']\n')
+	opfile.write("\nMap: robot\'s goal[" + str(goalPositions[robotGoalIdx][1]) + ',' + str(goalPositions[robotGoalIdx][0]) + '], worker\'s goal[' + str(goalPositions[workerGoalIdx][1]) + ',' + str(goalPositions[workerGoalIdx][0]) + ']\n')
 
 	# if any agents overlap with a goal
 	if set(currRobotPos) == set(goalPositions[robotGoalIdx]):
@@ -54,22 +55,23 @@ def printCurrMap(simMapFile, spaceArr, currRobotPos, currWorkerPos, robotGoalIdx
 
 			if j == currRobotPos[0] and i == currRobotPos[1]:
 				print(robotPrint, end="\t")
-				simMapFile.write(robotPrint+"\t")
+				opfile.write(robotPrint+"\t")
 			elif j == currWorkerPos[0] and i == currWorkerPos[1]:
 				print(workerPrint, end="\t")
-				simMapFile.write(workerPrint+"\t")
+				opfile.write(workerPrint+"\t")
 			elif j == goalPositions[robotGoalIdx][0] and i == goalPositions[robotGoalIdx][1]:
 				print("G_r", end="\t")
-				simMapFile.write("G_r\t")
+				opfile.write("G_r\t")
 			elif j == goalPositions[workerGoalIdx][0] and i == goalPositions[workerGoalIdx][1]:
 				print("G_w", end="\t")
-				simMapFile.write("G_w\t")
+				opfile.write("G_w\t")
 			else:
 				print("o", end="\t")
-				simMapFile.write("o\t")
+				opfile.write("o\t")
 		print("\n")
-		simMapFile.write("\n")
-def printStates(opfile, currRobotPos, currWorkerPos, goalPositions, workerAdpIdx, goalProb):
+		opfile.write("\n")
+	opfile.write("\n")
+def printStates(opfile, currRobotPos, currWorkerPos, goalPositions, workerAdpIdx, goalProb, adpProb):
 	opfile.write('Robot[%d,%d] Worker[%d,%d]\nBelief of the worker\'s goal:\n' % (currRobotPos[0], currRobotPos[1], currWorkerPos[0], currWorkerPos[1]))
 	print('Robot[' + str(currRobotPos[0]) + ',' + str(currRobotPos[1]) + '] Worker[' + str(currWorkerPos[0]) + ',' + str(currWorkerPos[1]) + '] Adapt level = ' + str(workerAdpIdx) + '\nBelief of the worker\'s goal:', end="\n")
 
@@ -82,11 +84,19 @@ def printStates(opfile, currRobotPos, currWorkerPos, goalPositions, workerAdpIdx
 		print('%.3f' % (goalProb[j-1]), end='\t')
 		opfile.write('%.3f\t' % (goalProb[j-1]))
 
-	opfile.write('\n')
 	print('')
-def printNxtAction(opfile, velocityArr, orientationArr, currWorkerVel, agentName):
-	print(agentName + ' next move: ', end='')
-	opfile.write(agentName + ' next move: ')
+	opfile.write('\n')
+
+	print('adaptive levels = [',end="")
+	opfile.write('adaptive levels = [')
+	for j in range(len(adpProb)):
+		print('%.3f' % (adpProb[j]), end=' ')
+		opfile.write('%.3f\t' % (adpProb[j]))
+	print(']',end="\n")
+	opfile.write(']\n')
+def printAction(opfile, velocityArr, orientationArr, currWorkerVel, agentName):
+	print(agentName + ' moved: ', end='')
+	opfile.write(agentName + ' moved: ')
 	if currWorkerVel > 0.0:
 		vel = int((currWorkerVel-1) / orientationArr.shape[0])+1
 		ori = int((currWorkerVel-1) % orientationArr.shape[0])
@@ -109,6 +119,22 @@ def printNxtAction(opfile, velocityArr, orientationArr, currWorkerVel, agentName
 	else:
 		print('stop')
 		opfile.write('stop\n')
+def printPolicy(spaceArr, goalPositions, policy):
+	print('\nWorker\'s Policy for goal[' + str(goalPositions[1]) + ',' + str(goalPositions[0]) + ']:\n')
+	for j in reversed(range(spaceArr.shape[0])):
+		for i in range(spaceArr.shape[1]):
+			if policy[j*spaceArr.shape[1]+i] > 0.0:
+				if policy[j*spaceArr.shape[1]+i] == 1:
+					print('^', end='\t')
+				elif policy[j*spaceArr.shape[1]+i] == 2:
+					print('>', end='\t')
+				elif policy[j*spaceArr.shape[1]+i] == 3:
+					print('v', end='\t')
+				else:
+					print('<', end='\t')
+			else:
+				print('x', end='\t')
+		print("\n")
 
 ### Calculate transition probabilities in space representation
 def spaceTransition2D(spaceArr, velocityArr, orientationArr):
@@ -222,7 +248,7 @@ def assignRewardsInPosition(spaceArr, goalPosition):
 
 	return rewardsMatrixInSpace
 def rewardEfficient():
-	return -2
+	return -1
 
 ### Compress position representation to state representation
 def compressRPositionToState(spaceArr, actionSize, stateSize, rewardsMatrixInSpace):
@@ -530,7 +556,7 @@ def genPomdpXStateTran(spaceArr, velocityArr, orientationArr, goalPositions, ada
 					policyAction = workerPolicies[goalIdx][(workerSpaceY * spaceArr.shape[1] + workerSpaceX)]
 
 					for workerAdaptiveIdx in range(len(adaptiveLevels)):
-						adaptProbValue, adaptAction, simAdpAction = adaptiveWorkerModel([workerSpaceY, workerSpaceX], policyAction, workerAdaptiveIdx, [robotSpaceY, robotSpaceX], action, orientationArr)
+						adaptProbValue, adaptAction, simAdpAction, _ = adaptiveWorkerModel(spaceArr, [workerSpaceY, workerSpaceX], policyAction, workerAdaptiveIdx, [robotSpaceY, robotSpaceX], orientationArr)
 
 						stateTranString += '\t\t\t<Entry>\n' 
 						stateTranString += '\t\t\t\t<Instance>'
@@ -637,7 +663,7 @@ def genPomdpXObsFunc(spaceArr, goalPositions, adaptiveLevels, workerPolicies):
 						workerActionProb = np.zeros([(len(goalPositions)-1), actionSize])
 						for goalIdx in range(len(goalPositions)-1):
 							workerPolicyAction = workerPolicies[goalIdx][(workerSpaceY * spaceArr.shape[1] + workerSpaceX)]
-							adaptProbValue, adaptAction, simAdpAction = adaptiveWorkerModel([workerSpaceY, workerSpaceX], workerPolicyAction, workerAdaptiveIdx, [robotSpaceY, robotSpaceX], action, orientationArr)
+							adaptProbValue, adaptAction, simAdpAction, _ = adaptiveWorkerModel(spaceArr, [workerSpaceY, workerSpaceX], workerPolicyAction, workerAdaptiveIdx, [robotSpaceY, robotSpaceX], orientationArr)
 							workerActionProb[goalIdx, int(workerPolicyAction)] += (1.0-adaptProbValue)
 							workerActionProb[goalIdx, int(adaptAction)] += adaptProbValue
 
@@ -681,8 +707,20 @@ def genPomdpXRewardFunc(spaceArr, orientationArr, goalPositions, T):
 	goalY = goalPositions[0,0]
 	rewardFuncString += '* ' + 'Rpos_' + str(goalY * spaceArr.shape[1] + goalX) + '_' + str(goalX) + '_' + str(goalY) + ' * *' 
 	rewardFuncString += '</Instance>\n' 
-	rewardFuncString += '\t\t\t\t<ValueTable> 10 </ValueTable>\n' 
+	rewardFuncString += '\t\t\t\t<ValueTable> 200 </ValueTable>\n' 
 	rewardFuncString += '\t\t\t</Entry>\n' 
+
+	# # cost for each action
+	# rewardFuncString += '\t\t\t<Entry>\n' 
+	# rewardFuncString += '\t\t\t\t<Instance>'
+	# goalX = goalPositions[0,1]
+	# goalY = goalPositions[0,0]
+	# rewardFuncString += '* * * *' 
+	# rewardFuncString += '</Instance>\n' 
+	# rewardFuncString += '\t\t\t\t<ValueTable>'
+	# rewardFuncString += str(rewardEfficient())
+	# rewardFuncString += '</ValueTable>\n' 
+	# rewardFuncString += '\t\t\t</Entry>\n' 
 
 	# penalty for colliding 
 	for robotCurrentState in range(spaceCount):
@@ -723,6 +761,7 @@ def genPomdpXRewardFunc(spaceArr, orientationArr, goalPositions, T):
 								rewardFuncString += 'Wvel_' + str(wAction) + ' '
 								rewardFuncString += '</Instance>\n' 
 								rewardFuncString += '\t\t\t\t<ValueTable> -200 </ValueTable>\n' 
+								# rewardFuncString += '\t\t\t\t<ValueTable> -120 </ValueTable>\n' 
 								rewardFuncString += '\t\t\t</Entry>\n'
 
 	rewardFuncString += '\t\t</Parameter>\n\t</Func>\n' 
@@ -758,7 +797,7 @@ def sarsopPolicy(fileName, goalPositions, adaptiveLevels):
 	return A
 
 ### Functions for simulation
-def adaptiveWorkerModel(workerPos, workerVel, adaptiveLevel, robotPos, robotAction, orientationArr):
+def adaptiveWorkerModel(spaceArr, workerPos, workerVel, adaptiveLevel, robotPos, orientationArr):
 	global Up, Right, Down, Left
 
 	# adaptiveLevel defines the window of deciding to avoid, 0, 1, 2, 3, 4, (higher level easier to adapt)
@@ -768,24 +807,32 @@ def adaptiveWorkerModel(workerPos, workerVel, adaptiveLevel, robotPos, robotActi
 	adaptAction = workerVel
 	simAdpAction = workerVel
 
-	if (robotPos[0] == workerPos[0]) and ((workerVel == (Up+1) and not robotAction == (Up+1)) or (not workerVel == (Up+1) and robotAction == (Up+1))) and (robotWorkerDistance <= 4):
+	# current position and next policy action
+	if (robotPos[1] == workerPos[1]) and ((workerVel == (Up+1) and robotPos[0] >= workerPos[0]) or (workerVel == (Down+1) and robotPos[0] <= workerPos[0])) and (robotWorkerDistance <= 3):
 		facingTowards = True
 
-	if (robotPos[1] == workerPos[1]) and ((workerVel == (Right+1) and not robotAction == (Right+1)) or (not workerVel == (Right+1) and robotAction == (Right+1))) and (robotWorkerDistance <= 4):
+	if (robotPos[0] == workerPos[0]) and ((workerVel == (Right+1) and robotPos[1] >= workerPos[1]) or (workerVel == (Left+1) and robotPos[1] <= workerPos[1])) and (robotWorkerDistance <= 3):
 		facingTowards = True	
 		
+	# next position based on policy action
+	tmpWorkerPos = workerPos.copy()
+	tmpWorkerPos = executeAction(tmpWorkerPos, workerVel, spaceArr.shape[0], spaceArr.shape[1])
+	if ((robotPos[1] == tmpWorkerPos[1]) or (robotPos[0] == tmpWorkerPos[0])) and (robotWorkerDistance <= 3):
+		facingTowards = True
+
 	if facingTowards == True:
 		adaptAction = workerVel+1 # change orientation to the right-hand side 90 degrees
-		if adaptAction >= len(orientationArr):
+		if adaptAction > len(orientationArr):
 			adaptAction = 1	
 
 	randProb = random()
 	if randProb < adaptProbValue and facingTowards == True:
 		simAdpAction = adaptAction
 
-	return adaptProbValue, adaptAction, simAdpAction
+	return adaptProbValue, adaptAction, simAdpAction, facingTowards
+
 def executeAction(originalPosition, action, spaceArrMax0, spaceArrMax1):
-	nextPosition = originalPosition
+	nextPosition = originalPosition.copy()
 	
 	if action == 0:
 		return originalPosition
@@ -868,7 +915,7 @@ if __name__ == "__main__":
 		workerVi = mdptoolbox.mdp.ValueIterationGS(workerP, workerR, 0.95, epsilon=0.01)
 		workerVi.run()
 		workerPolicies[goalIdx-1] = workerVi.policy
-		print("policy = ", workerVi.policy)
+		printPolicy(spaceArr, workerGoalPosition, workerVi.policy)
 
 	# Solve pomdp with SARSOP 
 	T, R = calculateTAndRMatrix(spaceArr, velocityArr, orientationArr, robotGoalPosition)
@@ -891,26 +938,44 @@ if __name__ == "__main__":
 	workerAdpIdx = WORKERADPIDX # 0, 1, 2, 3, 4
 	workerPolicy = workerPolicies[workerGoalIdx-1]
 	goalProb = np.full(len(goalPositions)-1, 1.0/(len(goalPositions)-1))
+	adpProb = np.full(len(adaptiveLevels), 1.0/len(adaptiveLevels))
 	gamma = BELIEFGAMMA
+	beta = BELIEFBETA
 
 	# simulation output files
-	simMapFile = open("simulatedMap.txt", "w")
-	opfile = open("positions"+ str(workerGoalIdx) + ".txt", "w")
+	simMapFile = open("simulatedMap" + str(workerGoalIdx) + ".txt", "w")
+	opfile = open("positions" + str(workerGoalIdx) + ".txt", "w")
+	logFile = open("log" + str(workerGoalIdx) + ".txt","w")
+
+	# output state after executing last action and observed current states
+	printCurrMap(opfile, spaceArr, currRobotPos, currWorkerPos, robotGoalIdx, workerGoalIdx, goalPositions)
+	printStates(opfile, prevRobotPos, prevWorkerPos, goalPositions, workerAdpIdx, goalProb, adpProb)
+	opfile.write('\n')
 
 	for i in range(int(spaceArr.shape[0]*spaceArr.shape[1])):
-
 		prevRobotPos = currRobotPos
 		prevRobotVel = robotNxtAction
 		prevWorkerPos = currWorkerPos
 		prevWorkerVel = currWorkerVel
+
+		# set worker action
+		workerPolicyAction = workerPolicy[prevWorkerPos[0] * spaceArr.shape[1] + prevWorkerPos[1]]
+		adaptProbValue, adaptAction, simAdpAction, facingTowards = adaptiveWorkerModel(spaceArr, prevWorkerPos, workerPolicyAction, workerAdpIdx, currRobotPos, orientationArr)
+		currWorkerVel = simAdpAction
+
+		# worker executes next action
+		currWorkerPos = executeAction(prevWorkerPos, currWorkerVel, spaceArr.shape[0], spaceArr.shape[1])
 		
-		# belief update (based on current state and action to the next state)
+		## Observe: belief update (based on previous state and action to the next state)
 		workerActionProb = np.zeros([(len(goalPositions)-1), actionSize])
+		sumWorkerAdpActionProb = 0.0
 		for goalIdx in range(len(goalPositions)-1):
-			workerAction = workerPolicies[goalIdx][(prevWorkerPos[0] * spaceArr.shape[1] + prevWorkerPos[1])]
-			adaptProbValue, adaptAction, simAdpAction = adaptiveWorkerModel(prevWorkerPos, workerAction, workerAdpIdx, prevRobotPos, prevRobotVel, orientationArr)
-			workerActionProb[goalIdx, int(workerAction)] += (1.0-adaptProbValue)
-			workerActionProb[goalIdx, int(adaptAction)] += adaptProbValue
+			workerActionBelief = workerPolicies[goalIdx][(prevWorkerPos[0] * spaceArr.shape[1] + prevWorkerPos[1])]
+			adaptProbValueBelief, adaptActionBelief, simAdpActionBelief, _ = adaptiveWorkerModel(spaceArr, prevWorkerPos, workerActionBelief, workerAdpIdx, prevRobotPos, orientationArr)
+			workerActionProb[goalIdx, int(workerActionBelief)] += (1.0-adaptProbValueBelief)
+			workerActionProb[goalIdx, int(adaptActionBelief)] += adaptProbValueBelief
+
+			sumWorkerAdpActionProb += workerActionProb[goalIdx, int(adaptActionBelief)]
 
 		sumOfActionFreq = workerActionProb[:, currWorkerVel].sum(axis=0)
 		sumProb = 0.0
@@ -923,32 +988,43 @@ if __name__ == "__main__":
 				sumProb += goalProb[j]
 			goalProb = goalProb/sumProb
 
-		# calculate next action
+		# Update apdativeness belief
+		if facingTowards == True:
+			if(currWorkerVel == adaptAction):
+				for j in range(len(adpProb)):
+					adpProb[j] = adpProb[j]*(1-beta) + ((adaptiveLevels[j]*0.25)*beta)
+					# print((adaptiveLevels[j]*0.25),end=",")
+			else:
+				for j in range(len(adpProb)):
+					adpProb[j] = adpProb[j]*(1-beta) + ((adaptiveLevels[len(adaptiveLevels)-j-1]*0.25)*beta)
+					# print((adaptiveLevels[len(adaptiveLevels)-j-1]*0.25),end=",")
+			print('')
+			adpProb /= sum(adpProb)
+
+		# calculate robot's next action
 		robotNxtAction = policyLookUp(alphaVectorTbl, prevRobotPos, prevWorkerPos, prevWorkerVel, goalProb)
-		workerPolicyAction = workerPolicy[prevWorkerPos[0] * spaceArr.shape[1] + prevWorkerPos[1]]
-		adaptProbValue, adaptAction, simAdpAction = adaptiveWorkerModel(prevWorkerPos, workerPolicyAction, workerAdpIdx, prevRobotPos, prevRobotVel, orientationArr)
-		currWorkerVel = simAdpAction
-
-		# output state after executing last action and observed current states
-		printCurrMap(simMapFile, spaceArr, currRobotPos, currWorkerPos, robotGoalIdx, workerGoalIdx, goalPositions)
-		printStates(opfile, prevRobotPos, prevWorkerPos, goalPositions, workerAdpIdx, goalProb)
-		printNxtAction(opfile, velocityArr, orientationArr, robotNxtAction, 'Robot\'s')
-		printNxtAction(opfile, velocityArr, orientationArr, currWorkerVel, 'Worker\'s')
-		opfile.write('\n')
-
+		
 		# execute next action
 		currRobotPos = executeAction(prevRobotPos, robotNxtAction, spaceArr.shape[0], spaceArr.shape[1])
-		currWorkerPos = executeAction(prevWorkerPos, currWorkerVel, spaceArr.shape[0], spaceArr.shape[1])
+
+
+		# output state after executing last action and observed current states
+		printCurrMap(opfile, spaceArr, currRobotPos, currWorkerPos, robotGoalIdx, workerGoalIdx, goalPositions)
+		printAction(opfile, velocityArr, orientationArr, robotNxtAction, 'Robot')
+		printAction(opfile, velocityArr, orientationArr, currWorkerVel, 'Worker')
+		printStates(opfile, currRobotPos, currWorkerPos, goalPositions, workerAdpIdx, goalProb, adpProb)
+
+		opfile.write('\n')
 
 		# terminate when robot reaches goal state
 		if currRobotPos[0] == goalPositions[0][0] and currRobotPos[1] == goalPositions[0][1]:
-			printCurrMap(simMapFile, spaceArr, currRobotPos, currWorkerPos, robotGoalIdx, workerGoalIdx, goalPositions)
-			printStates(opfile, prevRobotPos, prevWorkerPos, goalPositions, workerAdpIdx, goalProb)
+			printCurrMap(opfile, spaceArr, currRobotPos, currWorkerPos, robotGoalIdx, workerGoalIdx, goalPositions)
+			printStates(opfile, currRobotPos, currWorkerPos, goalPositions, workerAdpIdx, goalProb, adpProb)
 			print('\nEnd of simulation')
 			break
 
 	opfile.close()
-	simMapFile.close()
+	opfile.close()
 
 
 
