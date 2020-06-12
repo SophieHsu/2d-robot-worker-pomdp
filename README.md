@@ -40,7 +40,6 @@ As for the transition function, it describes the locomotion of both the robot as
 
 We create two different trajectories, respectively, for the two worker goals by solving an MDP model of the worker aiming to reach its goal destination.
 
-\code snippet of the worker's mdp
 
 ### Worker adaptiveness design
 
