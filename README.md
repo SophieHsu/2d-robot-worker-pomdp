@@ -5,19 +5,18 @@ The purpose of this project is to be familiarized with generating a PomdpX file 
 ## Problem description
 We will be exploring a problem named as the 2D Robot Worker problem. The problem models a robot moving towards its goal in a 2-dimensional simulated factory. Inside the factory, there is also a worker that operates to move towards its assigned goal. The robot does not know which one out of the two possible worker's goal is the worker assigned to. However, it is able to infer through observing the worker's trajectory.
 
-\insert picture of the problem
-
+![Image of problem_map](/images/problem_map.png)
 
 ## Execution instructions
 1) install SARSOP solver
 2) execute 2d_robot_worker.py until it asks for a policy file name
-\screenshot of input
+![Image of input_policy](/images/input_policy.png)
 3) retrieve the 2d_robot_worker.pomdpx file from the file location you execute the 2d_robot_worker.py
 4) use SARSOP to solve the pomdpx file and obtain a policy file
 5) input the policy file name to the terminal
 
 Finally, you will see the outputs of the simulated results.
-\screenshot of results
+![Image of results](/images/results.png)
 
 ## POMDP model
 Consider a map of size 3 x 7, as shown in the figure above. The two goals labeled in blue are the goals that will be assigned to the worker. The red is the robot's goal. We formulate the POMDP model as fellow:
@@ -32,7 +31,7 @@ The states include the robot's position (R_x and R_y), the worker's position (W_
 
 As for the transition function, it describes the locomotion of both the robot as it can move to neighbor cells that are horizontally or vertically adjacent to the one it is in. Additionally, we include the locomotion of the worker with an extra constraint based on the worker's assigned goal. For example, the two trajectories show the exact grids the worker will take when assigned reach one of the two goals. Therefore, the extra constraint is to express the influence of W_g (information included in the state space).
 
-\picture of two different trajectories
+![Image of worker_policies](/images/worker_policies.png)
 
 ## Worker trajectories
 
