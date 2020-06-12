@@ -1,4 +1,4 @@
-# 2d-robot-worker-pomdp
+# 2D World: Robot-Worker Coordination
 
 The purpose of this project is to be familiarized with generating a PomdpX file and solving a pomdp problem with SARSOP.
  
@@ -40,7 +40,13 @@ We create two different trajectories, respectively, for the two worker goals by 
 
 \code snippet of the worker's mdp
 
-It is advised that the worker should be able to reach the goal with multiple different trajectories. Therefore, the trajectory generating code can be altered to be more realistic.
+### Worker adaptiveness design
+
+The goal is to illustrate the influence of the robot's presents can influence the worker's choice of next step. This is a more realistic demonstration that includes the coupled influence of action choices between the robots and humans. The adaptiveness design in this project can be a projection of human preferences that are usually unobservable (can only be interpreted through inference of observable traits).
+
+We will assume that adaptiveness can be divided into 5 levels. The higher the level is, the more possibility that worker adapts its trajector according to the robot's status. Additionally, the worker only adapts when seen the robot as a threat to safety, in other words, only when the robot is within a certain distance and possibilly will collide with the worker. The details of the condition can be seen in the function adaptiveWorkerModel().
+
+Note: It is advised that the worker should be able to reach the goal with multiple different trajectories. Therefore, the trajectory generating code can be altered to be more realistic.
 
 
 
