@@ -9,11 +9,11 @@ We will be exploring a problem named as the 2D Robot Worker problem. The problem
 
 ## Execution instructions
 1) install SARSOP solver
-2) execute 2d_robot_worker.py until it asks for a policy file name
+2) execute 2d_robot_worker.py until it asks for the policy file
 <span style="display:block;text-align:center">![Image of input_policy](/images/input_policy.png)</span>
-3) retrieve the 2d_robot_worker.pomdpx file from the file location you execute the 2d_robot_worker.py
+3) retrieve the 2d_robot_worker.pomdpx file from the pomdpx_files folder
 4) use SARSOP to solve the pomdpx file and obtain a policy file
-5) input the policy file name to the terminal
+5) type the policy file path in the terminal
 
 Finally, you will see the outputs of the simulated results.
 

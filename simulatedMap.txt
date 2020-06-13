@@ -11,40 +11,40 @@ G_w	R	o	o	o	o	G_r
 
 Map: robot's goal[6,0], worker's goal[0,0]
 o	o	o	o	o	o	o	
-o	R	o	o	o	o	o	
-G_w	o	o	o	o	o	W(G_r)	
+o	o	o	o	o	o	o	
+G_w	o	R	o	o	o	W(G_r)	
 
 Map: robot's goal[6,0], worker's goal[0,0]
 o	o	o	o	o	o	o	
-o	o	R	o	o	o	o	
-G_w	o	o	o	o	W	G_r	
-
-Map: robot's goal[6,0], worker's goal[0,0]
-o	o	o	o	o	o	o	
-o	o	R	o	o	o	o	
-G_w	o	o	o	W	o	G_r	
+o	o	o	o	o	o	W	
+G_w	o	o	R	o	o	G_r	
 
 Map: robot's goal[6,0], worker's goal[0,0]
 o	o	o	o	o	o	o	
 o	o	o	R	o	o	o	
-G_w	o	o	W	o	o	G_r	
+G_w	o	o	o	o	o	W(G_r)	
 
 Map: robot's goal[6,0], worker's goal[0,0]
 o	o	o	o	o	o	o	
 o	o	o	o	R	o	o	
-G_w	o	W	o	o	o	G_r	
+G_w	o	o	o	o	W	G_r	
 
 Map: robot's goal[6,0], worker's goal[0,0]
 o	o	o	o	o	o	o	
 o	o	o	o	o	R	o	
-G_w	W	o	o	o	o	G_r	
+G_w	o	o	o	W	o	G_r	
 
 Map: robot's goal[6,0], worker's goal[0,0]
 o	o	o	o	o	o	o	
 o	o	o	o	o	o	o	
-W(G_w)	o	o	o	o	R	G_r	
+G_w	o	o	W	o	R	G_r	
 
 Map: robot's goal[6,0], worker's goal[0,0]
 o	o	o	o	o	o	o	
 o	o	o	o	o	o	o	
-W(G_w)	o	o	o	o	o	R(G_r)	
+G_w	o	W	o	o	o	R(G_r)	
+
+Map: robot's goal[6,0], worker's goal[0,0]
+o	o	o	o	o	o	o	
+o	o	o	o	o	o	o	
+G_w	o	W	o	o	o	R(G_r)	
